@@ -14,7 +14,7 @@
     "homepage_url": "http://www.google.com",
 
     "permissions": [
-        "activeTab",
+        "tabs",
         "webNavigation"
     ],
 
