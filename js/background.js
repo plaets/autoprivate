@@ -1,20 +1,22 @@
 //TODO permissions
-console.log("loaded");
-
-function processTabInfo(object, tabInfo)
-{
-    if(!tabInfo.incognito)
-    {
-        var creating = browser.windows.create({url: object.url, incognito: true});
-        browser.tabs.remove(object.tabId);
-        creating.then((window)=>{console.log("created incognito window with id " + window.id)}, (error)=>{console.log(error)});
-    }
-}
-
 function navigationListener(object)
 {
-    var tabsPromise = browser.tabs.get(object.tabId);
-    tabsPromise.then(processTabInfo.bind(null, object), (error)=>{console.log(error)});
+    browser.tabs.get(object.tabId).then(function(tabInfo){
+            if(!tabInfo.incognito)
+            {
+                browser.tabs.remove(object.tabId);
+                browser.windows.getAll({windowTypes:['normal']}).then(function(windows){
+                    privateWindows = [];
+                    for(w in windows)
+                        if(windows[w].incognito)
+                            privateWindows.push(windows[w]);
+                    if(!privateWindows.length)
+                        browser.windows.create({url: object.url, incognito: true}).then((window)=>{console.log("created incognito window with id " + window.id)}, console.log);
+                    else
+                        browser.tabs.create({url: object.url, windowId: privateWindows[0].id});
+            });
+        }
+    }, console.log);
 }
 
 var filter = {hostContains: "twitter"};
