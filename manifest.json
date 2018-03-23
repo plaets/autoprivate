@@ -15,8 +15,13 @@
 
     "permissions": [
         "tabs",
-        "webNavigation"
+        "webNavigation",
+        "storage"
     ],
+    
+    "options_ui": {
+        "page": "html/config.html"
+    },
 
     "background": {
         "scripts": ["js/background.js"]
