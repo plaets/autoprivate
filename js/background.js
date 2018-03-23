@@ -15,10 +15,9 @@ function navigationListener(object){
     }, console.log); //great job!
 }
 
-var filter = {};
-browser.storage.local.get("matches").then(item => {
+browser.storage.local.get("matches").then(function(item){
+    var filter = [];
     if(item.matches)
-        filter = {urlMatches: item.matches};
-    console.log(filter);
+        filter.push({hostContains: item.matches});
+    browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url:filter});
 },console.log);
-browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url:[filter]});
