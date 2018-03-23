@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "privatefilter",
+    "version": "0.1",
+
+    "applications": {
+            "gecko": {
+                    "id": "plugin@271692398.com",
+                    "strict_min_version": "42.0"
+                    }
+    },
+
+    "description": "Opens selected urls in private mode",
+    "homepage_url": "http://www.google.com",
+
+    "permissions": [
+        "activeTab",
+        "webNavigation"
+    ],
+
+    "background": {
+        "scripts": ["js/background.js"]
+    }
+}
