@@ -15,9 +15,18 @@ function navigationListener(object){
     }, console.log); //great job!
 }
 
-browser.storage.local.get("matches").then(function(item){
+function updateStorage(changes, areaName)
+{
+    if(browser.webNavigation.onBeforeNavigate.hasListener(navigationListener))
+        browser.webNavigation.onBeforeNavigate.removeListener(navigationListener);
+    
+    browser.storage.local.get("matches").then(function(item){
     var filter = [];
     if(item.matches)
         filter.push({hostContains: item.matches});
     browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url:filter});
-},console.log);
+    },console.log);
+}
+
+browser.storage.onChanged.addListener(updateStorage);
+updateStorage();
