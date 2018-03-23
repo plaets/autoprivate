@@ -15,5 +15,10 @@ function navigationListener(object){
     }, console.log); //great job!
 }
 
-var filter = {hostContains: "twitter"};
+var filter = {};
+browser.storage.local.get("matches").then(item => {
+    if(item.matches)
+        filter = {urlMatches: item.matches};
+    console.log(filter);
+},console.log);
 browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url:[filter]});
