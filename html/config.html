@@ -3,14 +3,32 @@
     <head>
         <meta charset="UTF-8"/>
         <title>privatefilter Configuration</title>
-        <link rel="stylesheet" type="text/css" src="../css/style.css"/>
     </head>
     <body>
+        <style>
+            .error
+            {
+                display: none;
+                color: red;
+            }
+        </style>
         <h1>config</h1>
         <form>
-            <label>hostContains<input type="text" id="matches"></label>
-            <button type="submit">Save</button>
+            <select id="type">
+                <option value="urlContains">Address contains</option>
+                <option value="hostContains">Host contains</option>
+                <option value="hostSuffix">Host suffix is</option>
+                <option value="pathContains">Path contains</option>
+                <option value="port">Port is</option>
+                <option value="urlMatches">Matches regular expression</option>
+            </select>
+            <input type="text" id="data" placeholder="">
+            <button type="button" id="add">Add</button>
         </form>
+        <div id="dataEmptyError" class="error">Data cannot be empty - otherwise it will will match all urls. If you want to match all urls, select "Matches regular expressions" and in use expression "*"</div>
+        <div id="dataExistsError" class="error">Same entry already exists</div>
+        <ul id="list">
+        </ul>
         <script src="../js/config.js"></script>
     </body>
 </html>
