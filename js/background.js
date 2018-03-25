@@ -16,16 +16,22 @@ function navigationListener(object){
     }, console.log); //great job!
 }
 
-function updateStorage(changes, areaName)
-{
+function filtersListToUrlFilter(filters){
+    urlFilters = [];
+    for(f in filters){
+        var e = {};
+        e[filters[f].type] = filters[f].data;
+        urlFilters.push(e);
+    }
+    return urlFilters;
+}
+
+function updateStorage(changes, areaName){
     if(browser.webNavigation.onBeforeNavigate.hasListener(navigationListener))
         browser.webNavigation.onBeforeNavigate.removeListener(navigationListener);
-    
-    browser.storage.local.get("matches").then(function(item){
-    var filter = [];
-    if(item.matches)
-        filter.push({hostContains: item.matches});
-    browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url:filter});
+    console.log(changes);
+    browser.storage.local.get("filters").then(function(config){
+        browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url: filtersListToUrlFilter(config.filters)}); //dont ask why config.filters 
     },console.log);
 }
 

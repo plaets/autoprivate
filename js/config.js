@@ -34,8 +34,6 @@ function deleteEntry(entry)
 
 function addListEntry(typeValue, dataValue, listId, entryId)
 {
-    console.log(typeValue);
-    console.log(dataValue);
     var entry = document.createElement("li");
     var node = document.createTextNode(types[typeValue] + " " + dataValue);
     entry.appendChild(node);
@@ -76,6 +74,7 @@ function refreshList(config)
 function restoreConfig(){
     function restore(result){
         config = result;
+        config.filters = config.filters.filter(function (e){return e != undefined});
         refreshList(config);
     }
     browser.storage.local.get("filters").then(restore, console.log); //console.log on error
@@ -87,8 +86,9 @@ function resetConfig(){
 }
 
 function saveConfig(query){
-    console.log(config);
     query.preventDefault();
+    config.filters = config.filters.filter(function (e){return e != undefined});
+    refreshList(config);
     browser.storage.local.set(config);
 }
 
@@ -96,3 +96,4 @@ document.addEventListener("DOMContentLoaded", restoreConfig);
 document.querySelector("#add").addEventListener("click", addButtonListener);
 document.querySelector("#submit").addEventListener("click", saveConfig);
 document.querySelector("#reset").addEventListener("click", resetConfig);
+//i hate this file so much
