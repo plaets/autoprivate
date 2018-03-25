@@ -2,7 +2,7 @@
 //TODO fix a bug where plugins are opened in another private tab
 function navigationListener(object){
     browser.tabs.get(object.tabId).then(function(tabInfo){
-            if(!tabInfo.incognito){
+            if(!tabInfo.incognito && object.parentFrameId == -1){
                 browser.tabs.remove(object.tabId);
                 browser.windows.getAll({windowTypes:['normal']}).then(function(windows){
                     for(w in windows)
@@ -10,7 +10,7 @@ function navigationListener(object){
                             browser.tabs.create({url: object.url, windowId: windows[w].id});
                             return;
                         }
-                    browser.windows.create({url: object.url, incognito: true}).then((window)=>{console.log("created incognito window with id " + window.id)}, console.log);
+                    browser.windows.create({url: object.url, incognito: true}).then({}, console.log);
             });
         }
     }, console.log); //great job!
@@ -29,7 +29,6 @@ function filtersListToUrlFilter(filters){
 function updateStorage(changes, areaName){
     if(browser.webNavigation.onBeforeNavigate.hasListener(navigationListener))
         browser.webNavigation.onBeforeNavigate.removeListener(navigationListener);
-    console.log(changes);
     browser.storage.local.get("filters").then(function(config){
         browser.webNavigation.onBeforeNavigate.addListener(navigationListener, {url: filtersListToUrlFilter(config.filters)}); //dont ask why config.filters 
     },console.log);
