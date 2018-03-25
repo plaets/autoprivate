@@ -1,67 +1,98 @@
-//TODO: show error on config page
+//TODO: show error on config.filters page
 //hostContains
 //hostsuffix
 //pathcontains
 //regular expression
 //port
-var config = [];
+const defaultConfig = {filters: []};
+var config = defaultConfig;
+var types = {urlContains: "Address contains",
+                hostContains: "Host contains",
+                hostSuffixHost: "suffix is",
+                pathContainsPath: "contains",
+                port: "Port is",
+                urlMatches: "Matches regular expression"};
 
 function addConfigEntry(t, d){
-    config.push({type: t, data: d});
+    config.filters.push({type: t, data: d});
 }
 
 function isInConfig(type, data){
-    for(e in config){
-        if(config[e].type == type && config[e].data == data)
+    for(e in config.filters){
+        if(config.filters[e] != undefined && config.filters[e].type == type && config.filters[e].data == data)
             return true;
     }
     return false;
 }
 
-function addEntry(){
-    console.log("add");
+function deleteEntry(entry)
+{
+    var index = entry.target.id.replace(/delete/g,"");
+    delete config.filters[index];
+    entry.target.parentElement.parentElement.removeChild(entry.target.parentElement); //great job!
+}
+
+function addListEntry(typeValue, dataValue, listId, entryId)
+{
+    console.log(typeValue);
+    console.log(dataValue);
     var entry = document.createElement("li");
-    var type = document.getElementById("type");
-    var data = document.getElementById("data").value;
-    data = data.replace(/ /g, "");
-    if(isInConfig(type.value, data)){
+    var node = document.createTextNode(types[typeValue] + " " + dataValue);
+    entry.appendChild(node);
+    var deleteButton = document.createElement("button");
+    deleteButton.className = "delete";
+    deleteButton.id = "delete".concat(entryId);
+    deleteButton.innerText = "Delete"; 
+    deleteButton.addEventListener("click", deleteEntry);
+    entry.appendChild(deleteButton);
+    document.getElementById(listId).appendChild(entry);
+}
+
+function addButtonListener(){
+    var dataValue = document.getElementById("data").value;
+    var typeValue = document.getElementById("type").value;
+    if(isInConfig(typeValue, dataValue)){
         document.getElementById("dataExistsError").style.display = "block";
+    }else if(dataValue === ''){
+        document.getElementById("dataEmptyError").style.display = "block";
     }else
     {
-        var node = document.createTextNode(type.options[type.selectedIndex].innerText + " " + data);
-        entry.appendChild(node);
-        if(data === ''){
-            document.getElementById("dataEmptyError").style.display = "block";
-        }else{
-            document.getElementById("dataEmptyError").style.display = "none";
-            document.getElementById("dataExistsError").style.display = "none";
-            var deleteButton = document.createElement("button");
-            deleteButton.className = "delete";
-            deleteButton.innerText = "Delete"; 
-            entry.appendChild(deleteButton);
-            document.getElementById("list").appendChild(entry);
-            addConfigEntry(type.value, data);
-        }
+        document.getElementById("dataEmptyError").style.display = "none";
+        document.getElementById("dataExistsError").style.display = "none";
+        addListEntry(typeValue, dataValue, "filtersList", config.filters.length);
+        addConfigEntry(typeValue, dataValue);
     }
+}
+
+function refreshList(config)
+{
+    var list = document.getElementById("filtersList");
+    while(list.firstChild)
+        list.removeChild(list.firstChild);
+    for(filter in config.filters)
+        addListEntry(config.filters[filter].type, config.filters[filter].data, "filtersList", filter);
 }
 
 function restoreConfig(){
-    return;
-    function setCurrentChoice(result){
-        document.querySelector("#matches").value = result.matches;
+    function restore(result){
+        config = result;
+        refreshList(config);
     }
-    function onError(error){
-        console.log(error);
-    }
-    browser.storage.local.get("matches").then(setCurrentChoice, onError);
+    browser.storage.local.get("filters").then(restore, console.log); //console.log on error
+}
+
+function resetConfig(){
+    config = defaultConfig;
+    refreshList(config);
 }
 
 function saveConfig(query){
+    console.log(config);
     query.preventDefault();
-    browser.storage.local.set({
-        matches: document.querySelector("#matches").value 
-    });
+    browser.storage.local.set(config);
 }
 
 document.addEventListener("DOMContentLoaded", restoreConfig);
-document.querySelector("#add").addEventListener("click", addEntry);
+document.querySelector("#add").addEventListener("click", addButtonListener);
+document.querySelector("#submit").addEventListener("click", saveConfig);
+document.querySelector("#reset").addEventListener("click", resetConfig);
