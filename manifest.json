@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "privatefilter",
-    "version": "0.1",
+    "version": "0.2",
 
     "applications": {
             "gecko": {
@@ -11,7 +11,7 @@
     },
 
     "description": "Opens selected urls in private mode",
-    "homepage_url": "http://www.google.com",
+    "homepage_url": "https://gitlab.com/fedox9/privatefilter",
 
     "permissions": [
         "tabs",
