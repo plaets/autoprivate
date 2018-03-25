@@ -8,8 +8,8 @@ const defaultConfig = {filters: []};
 var config = defaultConfig;
 var types = {urlContains: "Address contains",
                 hostContains: "Host contains",
-                hostSuffixHost: "suffix is",
-                pathContainsPath: "contains",
+                hostSuffix: "Host suffix is",
+                pathContains: "Path contains",
                 port: "Port is",
                 urlMatches: "Matches regular expression"};
 
