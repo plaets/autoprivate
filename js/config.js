@@ -54,37 +54,37 @@ function addButtonListener(){
         document.getElementById("dataEmptyError").style.display = "none";
         document.getElementById("dataExistsError").style.display = "none";
         addTableEntry(typeValue, dataValue, "filters-table", config.filters.length);
-        config.filters.push({type: t, data: d});
+        config.filters.push({type: typeValue, data: dataValue});
     }
 }
 
-function refreshList(config)
+function refreshTable(config)
 {
-    var list = document.getElementById("filters-list");
+    var list = document.getElementById("filters-table");
     while(list.firstChild)
         list.removeChild(list.firstChild);
     for(filter in config.filters)
-        addListEntry(config.filters[filter].type, config.filters[filter].data, "filters-list", filter);
+        addTableEntry(config.filters[filter].type, config.filters[filter].data, "filters-table", filter);
 }
 
 function restoreConfig(){
     function restore(result){
         config = result;
         config.filters = config.filters.filter(function (e){return e != undefined});
-        refreshList(config);
+        refreshTable(config);
     }
     browser.storage.local.get("filters").then(restore, console.log); //console.log on error
 }
 
 function resetConfig(){
     config = defaultConfig;
-    refreshList(config);
+    refreshTable(config);
 }
 
 function saveConfig(query){
     query.preventDefault();
     config.filters = config.filters.filter(function (e){return e != undefined});
-    refreshList(config);
+    refreshTable(config);
     browser.storage.local.set(config);
 }
 
