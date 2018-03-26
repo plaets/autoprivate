@@ -6,10 +6,19 @@
     </head>
     <body>
         <style>
-            .error
-            {
+            .error{
+                font-size: 18px;
+                margin: 10px;
                 display: none;
                 color: red;
+            }
+            #filters-list li{
+                display: block;
+                margin: 10px;
+                list-style-type: none;
+            }
+            #form-buttons{
+                margin-top: 10px;
             }
         </style>
         <h1>config</h1>
@@ -25,12 +34,14 @@
             <input type="text" id="data" placeholder="">
             <button type="button" id="add">Add</button>
         </form>
-        <div id="dataEmptyError" class="error">Data cannot be empty - otherwise it will will match all urls. If you want to match all urls, select "Matches regular expressions" and in use expression "*"</div>
+        <div id="dataEmptyError" class="error">Data field cannot be empty</div>
         <div id="dataExistsError" class="error">Same entry already exists</div>
-        <ul id="filtersList">
+        <ul id="filters-list">
         </ul>
-        <button id="submit">Submit</button>
-        <button id="reset">Reset to defaults</button>
+        <div id="form-buttons">
+            <button id="submit">Submit</button>
+            <button id="reset">Reset to defaults</button>
+        </div>
         <script src="../js/config.js"></script>
     </body>
 </html>

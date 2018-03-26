@@ -57,18 +57,18 @@ function addButtonListener(){
     {
         document.getElementById("dataEmptyError").style.display = "none";
         document.getElementById("dataExistsError").style.display = "none";
-        addListEntry(typeValue, dataValue, "filtersList", config.filters.length);
+        addListEntry(typeValue, dataValue, "filters-list", config.filters.length);
         addConfigEntry(typeValue, dataValue);
     }
 }
 
 function refreshList(config)
 {
-    var list = document.getElementById("filtersList");
+    var list = document.getElementById("filters-list");
     while(list.firstChild)
         list.removeChild(list.firstChild);
     for(filter in config.filters)
-        addListEntry(config.filters[filter].type, config.filters[filter].data, "filtersList", filter);
+        addListEntry(config.filters[filter].type, config.filters[filter].data, "filters-list", filter);
 }
 
 function restoreConfig(){
