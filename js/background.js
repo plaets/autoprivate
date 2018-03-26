@@ -6,7 +6,7 @@ function navigationListener(object){
                 browser.tabs.remove(object.tabId);
                 browser.windows.getAll({windowTypes:['normal']}).then(function(windows){
                     for(w in windows)
-                        if(windows[w].incognito){
+                        if(windows[w].incognito){ 
                             browser.tabs.create({url: object.url, windowId: windows[w].id});
                             return;
                         }
