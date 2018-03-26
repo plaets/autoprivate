@@ -13,10 +13,6 @@ var types = {urlContains: "Address contains",
                 port: "Port is",
                 urlMatches: "Matches regular expression"};
 
-function addConfigEntry(t, d){
-    config.filters.push({type: t, data: d});
-}
-
 function isInConfig(type, data){
     for(e in config.filters){
         if(config.filters[e] != undefined && config.filters[e].type == type && config.filters[e].data == data)
@@ -25,25 +21,25 @@ function isInConfig(type, data){
     return false;
 }
 
-function deleteEntry(entry)
-{
+function deleteTableEntry(entry){
     var index = entry.target.id.replace(/delete/g,"");
     delete config.filters[index];
-    entry.target.parentElement.parentElement.removeChild(entry.target.parentElement); //great job!
+    entry.target.parentNode.parentNode.parentNode.removeChild(entry.target.parentNode.parentNode); //great job!
 }
 
-function addListEntry(typeValue, dataValue, listId, entryId)
-{
-    var entry = document.createElement("li");
-    var node = document.createTextNode(types[typeValue] + " " + dataValue);
-    entry.appendChild(node);
-    var deleteButton = document.createElement("button");
+function addTableEntry(typeValue, dataValue, tableId, entryId){
+    var row = document.getElementById(tableId).insertRow(-1);
+    var cells = {};
+    cells["type"] = row.insertCell(-1);
+    cells["data"] = row.insertCell(-1);
+    cells["deleteButton"] = row.insertCell(-1);
+    cells["type"].innerText = types[typeValue];
+    cells["data"].innerText = dataValue;
+    var deleteButton = cells["deleteButton"].appendChild(document.createElement("button"));
     deleteButton.className = "delete";
     deleteButton.id = "delete".concat(entryId);
-    deleteButton.innerText = "Delete"; 
-    deleteButton.addEventListener("click", deleteEntry);
-    entry.appendChild(deleteButton);
-    document.getElementById(listId).appendChild(entry);
+    deleteButton.innerText = "Delete";
+    deleteButton.addEventListener("click", deleteTableEntry);
 }
 
 function addButtonListener(){
@@ -57,8 +53,8 @@ function addButtonListener(){
     {
         document.getElementById("dataEmptyError").style.display = "none";
         document.getElementById("dataExistsError").style.display = "none";
-        addListEntry(typeValue, dataValue, "filters-list", config.filters.length);
-        addConfigEntry(typeValue, dataValue);
+        addTableEntry(typeValue, dataValue, "filters-table", config.filters.length);
+        config.filters.push({type: t, data: d});
     }
 }
 
