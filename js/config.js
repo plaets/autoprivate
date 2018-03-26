@@ -14,6 +14,7 @@ var types = {urlContains: "Address contains",
                 urlMatches: "Matches regular expression"};
 
 function isInConfig(type, data){
+    console.log("isInConfig");
     for(e in config.filters){
         if(config.filters[e] != undefined && config.filters[e].type == type && config.filters[e].data == data)
             return true;
@@ -22,11 +23,13 @@ function isInConfig(type, data){
 }
 
 function deleteTableEntry(entry){
+    console.log("deleteTableEntry");
     delete config.filters[entry.target.dataset.entryId];
     entry.target.parentNode.parentNode.parentNode.removeChild(entry.target.parentNode.parentNode); //great job!
 }
 
 function addTableEntry(typeValue, dataValue, tableId, entryId){
+    console.log("addTableEntry");
     var row = document.getElementById(tableId).insertRow(-1);
     var cells = {};
     cells["type"] = row.insertCell(-1);
@@ -42,6 +45,7 @@ function addTableEntry(typeValue, dataValue, tableId, entryId){
 }
 
 function addButtonListener(){
+    console.log("addButtonListener");
     var dataValue = document.getElementById("data").value;
     var typeValue = document.getElementById("type").value;
     if(isInConfig(typeValue, dataValue)){
@@ -59,6 +63,7 @@ function addButtonListener(){
 
 function refreshTable(config)
 {
+    console.log("refreshTable");
     var list = document.getElementById("filters-table");
     while(list.firstChild)
         list.removeChild(list.firstChild);
@@ -67,6 +72,7 @@ function refreshTable(config)
 }
 
 function restoreConfig(){
+    console.log("restoreConfig");
     function restore(result){
         config = result;
         config.filters = config.filters.filter(function (e){return e != undefined});
@@ -76,11 +82,13 @@ function restoreConfig(){
 }
 
 function resetConfig(){
+    console.log("resetConfig");
     config = defaultConfig;
     refreshTable(config);
 }
 
 function saveConfig(query){
+    console.log("saveConfig");
     query.preventDefault();
     config.filters = config.filters.filter(function (e){return e != undefined});
     refreshTable(config);
@@ -88,14 +96,17 @@ function saveConfig(query){
 }
 
 function enterListener(event){
+    console.log("enterListener");
     if(event.key !== "Enter") return;
     document.querySelector("#add").click();
     event.preventDefault();
 }
 
+console.log("loading");
 document.addEventListener("DOMContentLoaded", restoreConfig);
 document.querySelector("#data").addEventListener("keyup", enterListener);
 document.querySelector("#add").addEventListener("click", addButtonListener);
 document.querySelector("#save").addEventListener("click", saveConfig);
 document.querySelector("#reset").addEventListener("click", resetConfig);
+console.log("loaded");
 //i hate this file so much
