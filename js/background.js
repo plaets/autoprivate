@@ -1,5 +1,3 @@
-//TODO config
-//TODO fix a bug where plugins are opened in another private tab
 function navigationListener(object){
     browser.tabs.get(object.tabId).then(function(tabInfo){
             if(!tabInfo.incognito && object.parentFrameId == -1){
