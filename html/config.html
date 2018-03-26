@@ -14,15 +14,30 @@
             }
             #filters-table{
                 margin-top: 5px;
+                border-collapse: collapse;
             }
             #filters-table td{
+                text-align: center;
                 border-bottom: 1px solid silver;
                 padding: 5px;
+                padding-left: 15px;
+                padding-right: 15px;
             }
-            #filters-table button{
+            button, select, input{
+                height: 35px;
+                -moz-appearance: button;
                 padding: 5px;
+                padding-left: 20px;
+                padding-right: 20px;
                 background-color: transparent;
-                border-style: solid;
+                border: 1px solid lightgray;
+                border-radius: 2px;
+            }
+            button:hover, select:hover{
+                background-color: #ececec;
+            }
+            input{
+                background-color: white;
             }
             #form-buttons{
                 margin-top: 10px;
