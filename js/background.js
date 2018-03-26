@@ -9,7 +9,7 @@ function navigationListener(object){
                         if(windows[w].incognito){ 
                             browser.tabs.create({url: object.url, windowId: windows[w].id});
                             return;
-                        }
+                        } 
                     browser.windows.create({url: object.url, incognito: true}).then({}, console.log);
             });
         }
