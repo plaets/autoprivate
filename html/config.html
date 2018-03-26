@@ -44,7 +44,7 @@
             }
         </style>
         <h1>config</h1>
-        <form>
+        <div id="filterForm">
             <select id="type">
                 <option value="urlContains">Address contains</option>
                 <option value="hostContains">Host contains</option>
@@ -55,13 +55,13 @@
             </select>
             <input type="text" id="data" placeholder="">
             <button type="button" id="add">Add</button>
-        </form>
+        </div>
         <div id="dataEmptyError" class="error">Data field cannot be empty</div>
         <div id="dataExistsError" class="error">Same entry already exists</div>
         <table id="filters-table">
         </table>
         <div id="form-buttons">
-            <button id="submit">Save</button>
+            <button id="save">Save</button>
             <button id="reset">Reset</button>
         </div>
         <script src="../js/config.js"></script>

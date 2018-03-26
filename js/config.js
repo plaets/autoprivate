@@ -87,8 +87,15 @@ function saveConfig(query){
     browser.storage.local.set(config);
 }
 
+function enterListener(event){
+    if(event.key !== "Enter") return;
+    document.querySelector("#add").click();
+    event.preventDefault();
+}
+
 document.addEventListener("DOMContentLoaded", restoreConfig);
+document.querySelector("#data").addEventListener("keyup", enterListener);
 document.querySelector("#add").addEventListener("click", addButtonListener);
-document.querySelector("#submit").addEventListener("click", saveConfig);
+document.querySelector("#save").addEventListener("click", saveConfig);
 document.querySelector("#reset").addEventListener("click", resetConfig);
 //i hate this file so much
