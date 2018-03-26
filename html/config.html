@@ -12,10 +12,17 @@
                 display: none;
                 color: red;
             }
-            #filters-list li{
-                display: block;
-                margin: 10px;
-                list-style-type: none;
+            #filters-table{
+                margin-top: 5px;
+            }
+            #filters-table td{
+                border-bottom: 1px solid silver;
+                padding: 5px;
+            }
+            #filters-table button{
+                padding: 5px;
+                background-color: transparent;
+                border-style: solid;
             }
             #form-buttons{
                 margin-top: 10px;
@@ -36,8 +43,6 @@
         </form>
         <div id="dataEmptyError" class="error">Data field cannot be empty</div>
         <div id="dataExistsError" class="error">Same entry already exists</div>
-        <ul id="filters-list">
-        </ul>
         <table id="filters-table">
         </table>
         <div id="form-buttons">

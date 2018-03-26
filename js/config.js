@@ -22,8 +22,7 @@ function isInConfig(type, data){
 }
 
 function deleteTableEntry(entry){
-    var index = entry.target.id.replace(/delete/g,"");
-    delete config.filters[index];
+    delete config.filters[entry.target.dataset.entryId];
     entry.target.parentNode.parentNode.parentNode.removeChild(entry.target.parentNode.parentNode); //great job!
 }
 
@@ -37,7 +36,7 @@ function addTableEntry(typeValue, dataValue, tableId, entryId){
     cells["data"].innerText = dataValue;
     var deleteButton = cells["deleteButton"].appendChild(document.createElement("button"));
     deleteButton.className = "delete";
-    deleteButton.id = "delete".concat(entryId);
+    deleteButton.dataset.entryId = entryId;
     deleteButton.innerText = "Delete";
     deleteButton.addEventListener("click", deleteTableEntry);
 }
