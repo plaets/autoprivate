@@ -42,7 +42,7 @@ function entryValid(typeValue, dataValue){
     }else if(dataValue === ''){
         document.getElementById("dataEmptyError").style.display = "block";
         return false;
-    }else if(typeValue == "port" && (dataValue.match(/\D/) != null || dataValue > 65535)){
+    }else if(typeValue == "port" && (dataValue.match(/\D/) != null || dataValue >= 65535)){
         document.getElementById("badPortNumberError").style.display = "block";
         return false;
     }else if(typeValue == "urlMatches"){
