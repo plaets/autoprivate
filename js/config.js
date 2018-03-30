@@ -35,21 +35,41 @@ function addTableEntry(typeValue, dataValue, tableId, entryId){
     deleteButton.addEventListener("click", deleteTableEntry);
 }
 
+function entryValid(typeValue, dataValue){
+    if(isInConfig(typeValue, dataValue)){
+        document.getElementById("dataExistsError").style.display = "block";
+        return false;
+    }else if(dataValue === ''){
+        document.getElementById("dataEmptyError").style.display = "block";
+        return false;
+    }else if(typeValue == "port" && (dataValue.match(/\D/) != null || dataValue > 65535)){
+        document.getElementById("badPortNumberError").style.display = "block";
+        return false;
+    }else if(typeValue == "urlMatches"){
+        try{ //https://stackoverflow.com/a/17250859/9572217
+            new RegExp(dataValue);
+        }catch(e){
+            document.getElementById("invalidRegexError").style.display = "block"; 
+            return false;
+        }
+   }
+   return true;
+}
+
+function resetErrors(){
+    document.getElementById("dataEmptyError").style.display = "none";
+    document.getElementById("invalidRegexError").style.display = "none";
+    document.getElementById("badPortNumberError").style.display = "none";
+    document.getElementById("dataExistsError").style.display = "none";
+}
+
 function addButtonListener(){
     var dataValue = document.getElementById("data").value;
     var typeValue = document.getElementById("type").value;
-    if(isInConfig(typeValue, dataValue)){
-        document.getElementById("dataExistsError").style.display = "block";
-    }else if(dataValue === ''){
-        document.getElementById("dataEmptyError").style.display = "block";
-    }else if(typeValue == "port" && (dataValue.match(/\D/) != null || dataValue > 65535)){
-        document.getElementById("badPortNumberError").style.display = "block";
-    }else{
-        document.getElementById("dataEmptyError").style.display = "none";
-        document.getElementById("badPortNumberError").style.display = "none";
-        document.getElementById("dataExistsError").style.display = "none";
+    if(entryValid(typeValue, dataValue)){
         addTableEntry(typeValue, dataValue, "filters-table", config.filters.length);
         config.filters.push({type: typeValue, data: dataValue});
+        resetErrors();
     }
 }
 
