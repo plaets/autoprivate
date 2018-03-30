@@ -42,9 +42,11 @@ function addButtonListener(){
         document.getElementById("dataExistsError").style.display = "block";
     }else if(dataValue === ''){
         document.getElementById("dataEmptyError").style.display = "block";
-    }else
-    {
+    }else if(typeValue == "port" && (dataValue.match(/\D/) != null || dataValue > 65535)){
+        document.getElementById("badPortNumberError").style.display = "block";
+    }else{
         document.getElementById("dataEmptyError").style.display = "none";
+        document.getElementById("badPortNumberError").style.display = "none";
         document.getElementById("dataExistsError").style.display = "none";
         addTableEntry(typeValue, dataValue, "filters-table", config.filters.length);
         config.filters.push({type: typeValue, data: dataValue});
