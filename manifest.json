@@ -25,5 +25,7 @@
 
     "background": {
         "scripts": ["js/background.js"]
-    }
+    },
+
+    "incognito": "spanning"
 }
