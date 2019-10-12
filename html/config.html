@@ -48,11 +48,9 @@
         </style>
         <div id="filterForm">
             <select id="type">
+                <option value="hostSuffix">Host suffix is (ex. .example.com)</option>
                 <option value="urlContains">Address contains</option>
                 <option value="hostContains">Host contains</option>
-                <option value="hostSuffix">Host suffix is</option>
-                <option value="pathContains">Path contains</option>
-                <option value="port">Port is</option>
                 <option value="urlMatches">Matches regular expression</option>
             </select>
             <input type="text" id="data" placeholder="">
@@ -65,7 +63,6 @@
         <table id="filters-table">
         </table>
         <div id="form-buttons">
-            <button id="save">Save</button>
             <button id="reset">Reset</button>
         </div>
         <script src="../js/config.js"></script>
