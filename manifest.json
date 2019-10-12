@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "privatefilter",
+    "name": "autoprivate",
     "version": "0.5",
 
     "applications": {
@@ -11,7 +11,7 @@
     },
 
     "description": "Opens selected urls in private mode",
-    "homepage_url": "https://gitlab.com/fedox9/privatefilter",
+    "homepage_url": "https://github.com/plaets/autoprivate",
 
     "permissions": [
         "tabs",
